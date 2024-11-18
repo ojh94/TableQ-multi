@@ -1,0 +1,532 @@
+<div layout:decorate="~{common/layouts/restaurantLayout}"
+     layout:fragment="Content">
+
+    <input type="hidden" id="restaurant-id" th:value="${id}">
+
+    <!-- Page content-->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Post content-->
+                <article>
+                    <!-- Post header-->
+                    <header class="mb-4">
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1"><input value=""></h1>
+                        <!-- Post meta content-->
+                        <div style="display: flex; align-items: center;">
+                            <i class="bi bi-star-fill" style="color: #FAC608;"></i>
+                            <p id="average-1" class="m-0"></p>
+                            <a id="goToReview" href="#review" style="text-decoration: underline;"></a>
+                        </div>
+                        <hr/>
+                        <div id="today-open-1"><i class="fas fa-clock"></i> <strong>영업 전</strong></div>
+                        <!-- Post categories-->
+                        <a id="available" class="badge bg-secondary text-decoration-none link-light">원격줄서기</a>
+                        <a class="badge bg-secondary text-decoration-none link-light">현장대기</a>
+                    </header>
+                    <div id="carouselExampleControls" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://cphoto.asiae.co.kr/listimglink/1/2020081014120617011_1597036326.jpg" class="d-block w-100 main-img" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" class="d-block w-100 main-img" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" class="d-block w-100 main-img" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        <input class="m-2" type="file" accept="image/*" onchange="updateActiveCarouselImage(event)" style="position: absolute;" />
+                    </div>
+                    <hr class="mb-5 mt-5"/>
+                    <h4 class="fw-bolder mb-4">대기 정보</h4>
+                    <div class="card mb-4" onclick="">
+                        <div id="today-open-2" class="card-body">
+                            <i class="fas fa-clock"></i>
+                            &nbsp;원격줄서기 시간 :&nbsp;&nbsp;<strong>휴무</strong>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <td>대기신청</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>순서미루기</td>
+                            <td>불가능</td>
+                        </tr>
+                        <tr>
+                            <td>대기확정코드</td>
+                            <td>입력 필요</td>
+                        </tr>
+                    </table>
+                    <hr class="mb-5 mt-5"/>
+                    <h4 class="fw-bolder">요일별 대기시간 통계</h4>
+                    <div class="mt-4 px-5">
+                        <div class="row">
+                            <div class="card" style="padding-right: 0px; padding-left: 0px; border: none;">
+                                <!--<div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Bar Chart Example
+                                </div>-->
+                                <div class="card-body"><canvas id="myBarChart" width="100%" height="35"></canvas></div>
+                                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <hr class="mb-5 mt-5"/>
+                <ul class="nav nav-tabs nav-fill mb-5 fs-5 fw-bold">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tap" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="menu" aria-selected="false">메뉴</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">리뷰</a>
+                    </li>
+                </ul>
+                <article class="px-5">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h4 class="fw-bolder mb-4 mt-5">영업정보</h4>
+                            <div style="text-align: center;">
+                                <p style="color: #696969;">매장의 영업정보를 설정해주세요</p>
+                                <a class="pick-outline" type="button" data-bs-toggle="modal" data-bs-target="#times-modal">설정하기</a>
+                            </div>
+
+                            <h4 class="fw-bolder mb-4 mt-5">위치정보</h4>
+                            <!--<p style="display: block;"></p>-->
+                            <div style="text-align: center;">
+                                <p style="color: #696969;">매장의 주소를 입력해주세요</p>
+                                <input style="width: 300px;" value="">
+                                <button>주소검색</button>
+                            </div>
+
+                            <h4 class="fw-bolder mb-4 mt-5">편의시설</h4>
+                            <div style="text-align: center;">
+                                <p style="color: #696969;">매장의 편의시설을 선택해주세요</p>
+                                <a class="pick-outline" type="button" data-bs-toggle="modal" data-bs-target="#amenities-modal">선택하기</a>
+                            </div>
+
+                            <h4 class="fw-bolder mb-4 mt-5">매장소개</h4>
+                            <textarea id="introduction" style="width: 100%; height: 200px;"></textarea>
+
+                            <h4 class="fw-bolder mb-4 mt-5">매장 Pick</h4>
+                            <div style="text-align: center;">
+                                <p style="color: #696969;">매장의 키워드를 선택해주세요</p>
+                                <a class="pick-outline" type="button" data-bs-toggle="modal" data-bs-target="#keywords-modal">선택하기</a>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="menu" role="tabpanel" aria-labelledby="menu-tab">
+                            <h4 class="fw-bolder mb-4 mt-5">메뉴</h4>
+                            <div id="menu-list"></div>
+                            <div id="addMenu" class="d-grid mt-5">
+                                <button id="addMenuButton" class="btn btn-primary btn-menu" type="button"><i class="bi bi-plus-circle-dotted"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                            <div class="d-flex m-5">
+                                <div class="text-center p-4 d-flex flex-column justify-content-center">
+                                    <h6>전체 평점</h6>
+                                    <span style="display: flex; align-items: center;">
+                                        <i class="bi bi-star-fill" style="color: #FAC608; font-size: 35px;"></i>
+                                        <span id="average-2" style="font-size: 40px;"></span>
+                                    </span>
+                                </div>
+                                <div class="vr m-5" style="height: 150px;"></div>
+
+                                <div class="review-bars">
+                                    <div class="review-bar">
+                                        <span class="star-label">5점</span>
+                                        <div class="bar">
+                                            <div id="5-bar" class="fill"></div>
+                                        </div>
+                                        <span id="5-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">4점</span>
+                                        <div class="bar">
+                                            <div id="4-bar" class="fill"></div>
+                                        </div>
+                                        <span id="4-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">3점</span>
+                                        <div class="bar">
+                                            <div id="3-bar" class="fill"></div>
+                                        </div>
+                                        <span id="3-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">2점</span>
+                                        <div class="bar">
+                                            <div id="2-bar" class="fill"></div>
+                                        </div>
+                                        <span id="2-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">1점</span>
+                                        <div class="bar">
+                                            <div id="1-bar" class="fill"></div>
+                                        </div>
+                                        <span id="1-point" class="percentage"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comments section-->
+                            <section class="mb-5">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <p id="reviews-number" class="mx-2 fw-bold"></p>
+                                        <form id="review-form" class="mb-4">
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- 페이지네이션 -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </article>
+                <div class="mt-5 px-5">
+                    <button id="cancel" class="btn btn-primary btn-lg btn-secondary" style="font-weight: bold;" type="button">취소</button>
+                    <button class="btn btn-primary btn-lg btn-orange" style="float: right;" type="button">수정완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 편의시설 모달 -->
+    <div class="modal fade" id="amenities-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="amenitiesLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="amenitiesLabel">편의시설</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="amenity" class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-1">
+                        <label class="form-check-label" for="amenities-1">
+                            와이파이
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-2">
+                        <label class="form-check-label" for="amenities-2">
+                            주차장
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-3">
+                        <label class="form-check-label" for="amenities-3">
+                            반려동물
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-4">
+                        <label class="form-check-label" for="amenities-4">
+                            콜키지
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-5">
+                        <label class="form-check-label" for="amenities-5">
+                            단체석 구비
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-6">
+                        <label class="form-check-label" for="amenities-6">
+                            대관 여부
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-7">
+                        <label class="form-check-label" for="amenities-7">
+                            테라스 여부
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-8">
+                        <label class="form-check-label" for="amenities-8">
+                            남녀 화장실 구분
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="amenities-9">
+                        <label class="form-check-label" for="amenities-9">
+                            유아용 의자
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="amenity-cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">선택완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 키워드 모달 -->
+    <div class="modal fade" id="keywords-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="keywordsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="keywordsLabel">매장 Pick</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="keyword" class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-1">
+                        <label class="form-check-label" for="keywords-1">
+                            아늑한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-2">
+                        <label class="form-check-label" for="keywords-2">
+                            세련된
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-3">
+                        <label class="form-check-label" for="keywords-3">
+                            조용한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-4">
+                        <label class="form-check-label" for="keywords-4">
+                            빈티지
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-5">
+                        <label class="form-check-label" for="keywords-5">
+                            모던한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-6">
+                        <label class="form-check-label" for="keywords-6">
+                            고급스러운
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-7">
+                        <label class="form-check-label" for="keywords-7">
+                            클래식한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-8">
+                        <label class="form-check-label" for="keywords-8">
+                            감성적인
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-9">
+                        <label class="form-check-label" for="keywords-9">
+                            깔끔한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-10">
+                        <label class="form-check-label" for="keywords-10">
+                            화사한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-11">
+                        <label class="form-check-label" for="keywords-11">
+                            이국적인
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-12">
+                        <label class="form-check-label" for="keywords-12">
+                            트렌디한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-13">
+                        <label class="form-check-label" for="keywords-13">
+                            데이트하기 좋은
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-14">
+                        <label class="form-check-label" for="keywords-14">
+                            레트로한
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-15">
+                        <label class="form-check-label" for="keywords-15">
+                            전통적인
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="keywords-16">
+                        <label class="form-check-label" for="keywords-16">
+                            로맨틱한
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="keyword-cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">선택완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 영업정보 모달 -->
+    <div class="modal fade" id="times-modal" tabindex="-1" aria-labelledby="timesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="timesLabel">영업정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card mb-3" style="background-color: rgba(237, 125, 49, 0.1); border: none;">
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>전화번호</td>
+                                    <td><input/></td>
+                                </tr>
+                                <tr>
+                                    <td>휴무일</td>
+                                    <td><input value="-"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color: rgba(128, 128, 128, 0.1); border: none;">
+                        <div class="card-body">
+                            <p class="fw-bold">월요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="monday-open" type="time" value=""/> ~ <input id="monday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="monday-break-start" type="time" value=""/> ~ <input id="monday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">화요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="tuesday-open" type="time" value=""/> ~ <input id="tuesday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="tuesday-break-start" type="time" value=""/> ~ <input id="tuesday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">수요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="wednesday-open" type="time" value=""/> ~ <input id="wednesday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="wednesday-break-start" type="time" value=""/> ~ <input id="wednesday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">목요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="thursday-open" type="time" value=""/> ~ <input id="thursday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="thursday-break-start" type="time" value=""/> ~ <input id="thursday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">금요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="friday-open" type="time" value=""/> ~ <input id="friday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="friday-break-start" type="time" value=""/> ~ <input id="friday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">토요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="saturday-open" type="time" value=""/> ~ <input id="saturday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="saturday-break-start" type="time" value=""/> ~ <input id="saturday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">일요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td><input id="sunday-open" type="time" value=""/> ~ <input id="sunday-close" type="time" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td><input id="sunday-break-start" type="time" value=""/> ~ <input id="sunday-break-end" type="time" value=""/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

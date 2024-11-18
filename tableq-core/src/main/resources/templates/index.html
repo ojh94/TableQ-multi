@@ -1,0 +1,94 @@
+<main layout:decorate="~{common/layouts/mainLayout}"
+      layout:fragment="Content">
+  <div class="section-list">
+    <section class="search-section">
+      <h2>맛있는 식사를 예약하세요</h2>
+      <form id="searchForm">
+        <input
+                type="text"
+                id="searchInput"
+                placeholder="레스토랑 또는 음식 검색"
+        />
+        <button type="submit" class="btn btn-orange">
+          <i data-lucide="search"></i> 검색
+        </button>
+
+      </form>
+
+    </section>
+
+    <div class="min-h-screen bg-orange-50">
+      <section class="restaurant-section">
+        <div class="section-header">
+          <h3>추천 레스토랑</h3>
+          <select id="sortSelect">
+            <option value="recommended">추천순</option>
+            <option value="nearest">가까운 순</option>
+          </select>
+        </div>
+        <div class="restaurant-grid" id="restaurantGrid"></div>
+      </section>
+
+      <div class="category">
+        <div class="sub-category">
+          <div class="local-title">
+            <h3>대전 맛집 찾기</h3>
+            <button class="btn btn-change">지역변경</button>
+          </div>
+          <div class="local-container">
+            <button class="btn local">
+              대전<br />
+              전체
+            </button>
+            <button class="btn local">
+              유성구<br />
+              대덕구
+            </button>
+            <button class="btn local">서구</button>
+            <button class="btn local">
+              중구<br />
+              동구
+            </button>
+          </div>
+        </div>
+
+
+        <!-- <div class="sub-category"> -->
+        <div class="container">
+          <div class="min-h-screen bg-orange-50">
+            <section class="restaurant-section">
+              <div class="resent-title">
+                <h3>우리가 또간집</h3>
+                <button class="btn btn-change">전체보기</button>
+              </div>
+              <div class="restaurant-grid" id="restaurantGrid2"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <nav class="toolbar">
+    <a href="#home" class="toolbar-item">
+      <i data-lucide="home"></i>
+      <span>홈</span>
+    </a>
+    <a href="#search" class="toolbar-item">
+      <i data-lucide="search"></i>
+      <span>검색</span>
+    </a>
+    <a href="#favorites" class="toolbar-item">
+      <i data-lucide="heart"></i>
+      <span>관심매장</span>
+    </a>
+    <a href="#profile" class="toolbar-item">
+      <i data-lucide="user"></i>
+      <span>내정보</span>
+    </a>
+  </nav>
+</main>
+
+<script defer src="js/index.js"></script>

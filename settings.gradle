@@ -1,0 +1,5 @@
+rootProject.name = 'tableq-multi'
+include 'tableq-user'
+include 'tableq-core'
+include 'tableq-owner'
+

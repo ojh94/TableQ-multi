@@ -1,0 +1,360 @@
+<div layout:decorate="~{common/layouts/restaurantLayout}"
+     layout:fragment="Content">
+
+    <input type="hidden" id="restaurant-id" th:value="${id}">
+
+    <!-- Page content-->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Post content-->
+                <article>
+                    <!-- Post header-->
+                    <header class="mb-4">
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1"></h1>
+                        <!-- Post meta content-->
+                        <!--<div class="text-muted fst-italic mb-2">YOUR FAVORITE TENDON HAUS</div>-->
+                        <div style="display: flex; align-items: center;">
+                            <i class="bi bi-star-fill" style="color: #FAC608;"></i>
+                            <p id="average-1" class="m-0"></p>
+                            <a id="goToReview" href="#review" style="text-decoration: underline;"></a>
+                        </div>
+                        <hr/>
+                        <div id="today-open-1"><i class="fas fa-clock"></i> <strong>영업 전</strong></div>
+                        <!-- Post categories-->
+                        <a id="available" class="badge bg-secondary text-decoration-none link-light">원격줄서기</a>
+                        <a class="badge bg-secondary text-decoration-none link-light">현장대기</a>
+                    </header>
+                    <div id="carouselExampleControls" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://cphoto.asiae.co.kr/listimglink/1/2020081014120617011_1597036326.jpg" class="d-block w-100 main-img" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" class="d-block w-100 main-img" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" class="d-block w-100 main-img" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <hr class="mb-5 mt-5"/>
+                    <h4 class="fw-bolder mb-4">대기 정보</h4>
+                    <div class="card mb-4" onclick="">
+                        <div id="today-open-2" class="card-body">
+                            <i class="fas fa-clock"></i>
+                            &nbsp;원격줄서기 시간 :&nbsp;&nbsp;<strong>휴무</strong>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <td>대기신청</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>순서미루기</td>
+                            <td>불가능</td>
+                        </tr>
+                        <tr>
+                            <td>대기확정코드</td>
+                            <td>입력 필요</td>
+                        </tr>
+                    </table>
+                    <hr class="mb-5 mt-5"/>
+                    <h4 class="fw-bolder">요일별 대기시간 통계</h4>
+                    <div class="mt-4 px-5">
+                        <div class="row">
+                            <div class="card" style="padding-right: 0px; padding-left: 0px; border: none;">
+                                <!--<div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Bar Chart Example
+                                </div>-->
+                                <div class="card-body"><canvas id="myBarChart" width="100%" height="35"></canvas></div>
+                                <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <hr class="mb-5 mt-5"/>
+                <ul class="nav nav-tabs nav-fill mb-5 fs-5 fw-bold">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tap" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="menu" aria-selected="false">메뉴</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">리뷰</a>
+                    </li>
+                </ul>
+                <article class="px-5">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
+                                <h4 class="fw-bolder">영업정보</h4>
+                                <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#times-modal">전체보기 &gt;</a>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="today-open-3"><strong>휴무</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>휴무일</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>전화번호</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <h4 class="fw-bolder mb-4 mt-5">위치정보</h4>
+                            <p id="text-copy" class="mb-4" style="display: block;"></p>
+                            <!-- 네이버 지도 API 필요 -->
+                            <button onclick="copyText()" style="border: none; padding: 5px 10px; border-radius: 20px;">
+                                <i class="bi bi-clipboard"></i>&nbsp;주소복사
+                            </button>
+
+                            <h4 class="fw-bolder mb-4 mt-5">편의시설</h4>
+                            <div id="amenity"></div>
+
+                            <h4 class="fw-bolder mb-4 mt-5">매장소개</h4>
+                            <p id="introduction"></p>
+
+                            <h4 class="fw-bolder mb-4 mt-5">매장 Pick</h4>
+                            <div id="keyword"></div>
+                        </div>
+
+                        <div class="tab-pane fade" id="menu" role="tabpanel" aria-labelledby="menu-tab">
+                            <h4 class="fw-bolder mb-4 mt-5">메뉴</h4>
+                            <div id="menu-list"></div>
+                        </div>
+
+                        <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                            <div class="d-flex m-5">
+                                <div class="text-center p-4 d-flex flex-column justify-content-center">
+                                    <h6>전체 평점</h6>
+                                    <span style="display: flex; align-items: center;">
+                                        <i class="bi bi-star-fill" style="color: #FAC608; font-size: 35px;"></i>
+                                        <span id="average-2" style="font-size: 40px;"></span>
+                                    </span>
+                                </div>
+                                <div class="vr m-5" style="height: 150px;"></div>
+
+                                <div class="review-bars">
+                                    <div class="review-bar">
+                                        <span class="star-label">5점</span>
+                                        <div class="bar">
+                                            <div id="5-bar" class="fill"></div>
+                                        </div>
+                                        <span id="5-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">4점</span>
+                                        <div class="bar">
+                                            <div id="4-bar" class="fill"></div>
+                                        </div>
+                                        <span id="4-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">3점</span>
+                                        <div class="bar">
+                                            <div id="3-bar" class="fill"></div>
+                                        </div>
+                                        <span id="3-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">2점</span>
+                                        <div class="bar">
+                                            <div id="2-bar" class="fill"></div>
+                                        </div>
+                                        <span id="2-point" class="percentage"></span>
+                                    </div>
+                                    <div class="review-bar">
+                                        <span class="star-label">1점</span>
+                                        <div class="bar">
+                                            <div id="1-bar" class="fill"></div>
+                                        </div>
+                                        <span id="1-point" class="percentage"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comments section-->
+                            <section class="mb-5">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <p id="reviews-number" class="mx-2 fw-bold"></p>
+                                        <hr/>
+                                        <div class="star_rating ms-1 mb-2">
+                                            <span class="star on" value="1"> </span>
+                                            <span class="star" value="2"> </span>
+                                            <span class="star" value="3"> </span>
+                                            <span class="star" value="4"> </span>
+                                            <span class="star" value="5"> </span>
+                                        </div>
+                                        <form id="review-form" class="mb-4">
+                                            <textarea id="review-textarea" class="form-control" rows="4" placeholder="솔직한 평가를 남겨주세요!"></textarea>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- 페이지네이션 -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </article>
+                <div class="mt-5 px-5">
+                    <button id="modify-button" class="btn btn-primary btn-lg btn-orange" style="float: right;" type="button">수정</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 영업정보 모달 -->
+    <div class="modal fade" id="times-modal" tabindex="-1" aria-labelledby="timesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="timesLabel">영업정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card mb-3" style="background-color: rgba(237, 125, 49, 0.1); border: none;">
+                        <div class="card-body">
+                            <p id="today-week" class="fw-bold">오늘 (휴무)</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="today-open-4">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="today-break">-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color: rgba(128, 128, 128, 0.1); border: none;">
+                        <div class="card-body">
+                            <p class="fw-bold">월요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="monday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="monday-break">-</td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">화요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="tuesday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="tuesday-break">-</td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">수요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="wednesday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="wednesday-break">-</td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">목요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="thursday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="thursday-break">-</td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">금요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="friday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="friday-break">-</td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">토요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="saturday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="saturday-break">-</td>
+                                </tr>
+                            </table>
+                            <div class="mt-5"></div>
+                            <p class="fw-bold">일요일</p>
+                            <table>
+                                <tr>
+                                    <td>운영시간</td>
+                                    <td id="sunday-open">-</td>
+                                </tr>
+                                <tr>
+                                    <td>브레이크 타임</td>
+                                    <td id="sunday-break">-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

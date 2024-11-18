@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  h2:
+    console:
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://tableq-database.ctsco442ccaq.ap-northeast-2.rds.amazonaws.com:5432/postgres
+    username: postgres
+    password: tableq1234
+  jpa:
+    # show-sql: false  # 운영 환경에서는 SQL 로그를 출력하지 않는 것이 좋음
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
